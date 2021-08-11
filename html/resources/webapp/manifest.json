@@ -90,6 +90,11 @@
 				"preload": true,
 				"uri": "model/algorithms/apl/forecast.json"
 			},
+			"pal_auto_arima": {
+				"type": "sap.ui.model.json.JSONModel",
+				"preload": true,
+				"uri": "model/algorithms/pal/auto_arima.json"
+			},
 			"config": {
 				"type": "sap.ui.model.json.JSONModel",
 				"preload": true,
@@ -123,6 +128,10 @@
 				"name": "forecast",
 				"pattern": "forecast",
 				"target": "forecast"
+			}, {
+				"name": "auto_arima",
+				"pattern": "auto_arima",
+				"target": "auto_arima"
 			}],
 			"targets": {
 				"demo": {
@@ -133,8 +142,11 @@
 				"forecast": {
 					"clearAggregation": true,
 					"viewName": "algorithms.apl.forecast"
+				},
+				"auto_arima": {
+					"clearAggregation": true,
+					"viewName": "algorithms.pal.auto_arima"
 				}
-
 			}
 		}
 	}

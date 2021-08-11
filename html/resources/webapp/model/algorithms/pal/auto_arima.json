@@ -1,0 +1,45 @@
+{
+	"key": "auto_arima",
+	"library": "pal",
+	"label": "PAL Auto ARIMA",
+	"service": {
+		"url": "/xsjs/pal/auto_arima.xsjs",
+		"method": "POST",
+		"params": {
+			"SEARCHSTRATEGY": {
+				"label": "Search strategy",
+				"description": "The search strategy for optimal ARMA model",
+				"default": 1,
+				"values": [{
+					"key": 0,
+					"label": "Exhaustive"
+				}, {
+					"key": 1,
+					"label": "Stepwise"
+				}]
+			},
+			"SEASONALPERIOD": {
+				"label": "Seasonal period",
+				"default": "20",
+				"step": 1,
+				"min": -1,
+				"max": 100,
+				"description": "Value of the seasonal period. (Negative: Automatically identify seasonality by means of auto-correlation scheme, 0 or 1: Non-seasonal, Others: Seasonal period)."
+			},
+			"FORECASTLENGTH": {
+				"label": "Number of forecast",
+				"default": "20",
+				"step": 1,
+				"min": 1,
+				"max": 100,
+				"description": "Number of points to forecast"
+			}
+		}
+	},
+	"default_payload": {
+		"DATASETNAME": null,
+		"SEARCHSTRATEGY": 1,
+		"SEASONALPERIOD": -1,
+		"FORECASTLENGTH": 20
+	}
+}

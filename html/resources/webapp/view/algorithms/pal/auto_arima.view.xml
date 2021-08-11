@@ -1,0 +1,29 @@
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:ui="sap.ui"
+ controllerName="forecast.html.controller.algorithms.pal.auto_arima"
+	displayBlock="true">
+	<App id="idAppControl">
+		<Page showHeader="true" showNavButton="true" navButtonPress="onNavHome" title="Forecast - PAL Auto ARIMA">
+			<content>
+				<ui:core.Fragment fragmentName="forecast.html.fragment.display_list" type="XML"/>
+				<IconTabBar expandable="false" visible="{config>/enableSelectDataset}" id="tab">
+					<items>
+						<IconTabFilter key="params" text="Set The Algorithm Execution Parameters">
+							<ui:core.Fragment fragmentName="forecast.html.fragment.algorithms.pal.auto_arima_parameters" type="XML"/>
+							<Button text="Execute" press="onPressExecute"/>
+						</IconTabFilter>
+						<IconTabFilter key="result" text="Results" visible="{= !!${results>/hasResult} }">
+							<ui:core.Fragment fragmentName="forecast.html.fragment.algorithms.pal.auto_arima_results" type="XML"/>
+						</IconTabFilter>
+					</items>
+				</IconTabBar>
+			</content>
+			<footer>
+				<Bar>
+					<contentLeft>
+						<Button text="Back" press="onNavHome"/>
+					</contentLeft>
+				</Bar>
+			</footer>
+		</Page>
+	</App>
+</mvc:View>

@@ -1,0 +1,150 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:ui="sap.ui" xmlns:viz="sap.viz">
+	<IconTabBar>
+		<items>
+			<IconTabFilter text="Results">
+				<viz:ui5.controls.Popover id="result_popover"/>
+				<viz:ui5.controls.VizFrame width="100%" id="result_viz_frame" uiConfig="{applicationSet:'fiori'}" vizType='timeseries_line'>
+					<viz:dataset>
+						<viz:ui5.data.FlattenedDataset data="{path : 'results>/tables/OUTPUT'}">
+							<viz:dimensions>
+								<viz:ui5.data.DimensionDefinition name="Date" value="{path : 'results>signal_time'}" dataType="date"/>
+							</viz:dimensions>
+							<viz:measures>
+								<viz:ui5.data.MeasureDefinition name="Original Value" value="{path : 'results>signal_value'}"/>
+								<viz:ui5.data.MeasureDefinition name="Forecast" value="{path : 'results>forecast'}"/>
+								<viz:ui5.data.MeasureDefinition name="Lower Limit 80%" value="{path : 'results>lowerlimit_80'}"/>
+								<viz:ui5.data.MeasureDefinition name="Upper Limit 80%" value="{path : 'results>upperlimit_80'}"/>
+								<viz:ui5.data.MeasureDefinition name="Lower Limit 95%" value="{path : 'results>lowerlimit_95'}"/>
+								<viz:ui5.data.MeasureDefinition name="Upper Limit 95%" value="{path : 'results>upperlimit_95'}"/>
+							</viz:measures>
+						</viz:ui5.data.FlattenedDataset>
+					</viz:dataset>
+					<viz:feeds>
+						<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Original Value"/>
+						<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Forecast"/>
+						<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Lower Limit 80%"/>
+						<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Upper Limit 80%"/>
+						<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Lower Limit 95%"/>
+						<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Upper Limit 95%"/>
+						<viz:ui5.controls.common.feeds.FeedItem uid="timeAxis" type="Dimension" values="Date"/>
+					</viz:feeds>
+				</viz:ui5.controls.VizFrame>
+				<ui:table.Table enableBusyIndicator="true" selectionMode="None" width="100%"
+					rows="{path : 'results>/tables/OUTPUT', sorter: { path: 'signal_time', descending: true} }">
+					<ui:columns>
+						<ui:table.Column sortProperty="signal_time" filterProperty="signal_time">
+							<Label text="Date"/>
+							<ui:template>
+								<Text text="{path : 'results>signal_time'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="signal_value" filterProperty="signal_value">
+							<Label text="Original Value"/>
+							<ui:template>
+								<Text text="{path : 'results>signal_value', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="forecast" filterProperty="forecast">
+							<Label text="Forecast"/>
+							<ui:template>
+								<Text text="{path : 'results>forecast', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="standard_error" filterProperty="standard_error">
+							<Label text="Standard Error"/>
+							<ui:template>
+								<Text text="{path : 'results>standard_error', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="lowerlimit_80" filterProperty="lowerlimit_80%">
+							<Label text="Lower Limit 80%"/>
+							<ui:template>
+								<Text text="{path : 'results>lowerlimit_80', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="upperlimit_80" filterProperty="upperlimit_80">
+							<Label text="Upper Limit 80%"/>
+							<ui:template>
+								<Text text="{path : 'results>upperlimit_80', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="lowerlimit_95" filterProperty="lowerlimit_95%">
+							<Label text="Lower Limit 95%"/>
+							<ui:template>
+								<Text text="{path : 'results>lowerlimit_95', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="upperlimit_80" filterProperty="upperlimit_95">
+							<Label text="Upper Limit 95%"/>
+							<ui:template>
+								<Text text="{path : 'results>upperlimit_95', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+					</ui:columns>
+				</ui:table.Table>
+			</IconTabFilter>
+			<IconTabFilter text="Fit">
+				<viz:ui5.controls.Popover id="result_fit_popover"/>
+				<viz:ui5.controls.VizFrame width="100%" id="result_fit_viz_frame" uiConfig="{applicationSet:'fiori'}" vizType='timeseries_line'>
+					<viz:dataset>
+						<viz:ui5.data.FlattenedDataset data="{path : 'results>/tables/FIT'}">
+							<viz:dimensions>
+								<viz:ui5.data.DimensionDefinition name="Date" value="{path : 'results>signal_time'}" dataType="date"/>
+							</viz:dimensions>
+							<viz:measures>
+								<viz:ui5.data.MeasureDefinition name="Fitted" value="{path : 'results>fitted'}"/>
+								<viz:ui5.data.MeasureDefinition name="Residuals" value="{path : 'results>residuals'}"/>
+							</viz:measures>
+						</viz:ui5.data.FlattenedDataset>
+					</viz:dataset>
+					<viz:feeds>
+						<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Fitted"/>
+						<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Residuals"/>						
+						<viz:ui5.controls.common.feeds.FeedItem uid="timeAxis" type="Dimension" values="Date"/>
+					</viz:feeds>
+				</viz:ui5.controls.VizFrame>			    
+				<ui:table.Table enableBusyIndicator="true" selectionMode="None" width="100%"
+					rows="{path : 'results>/tables/FIT', sorter: { path: 'signal_time', descending: true} }">
+					<ui:columns>
+						<ui:table.Column sortProperty="signal_time" filterProperty="signal_time">
+							<Label text="Date"/>
+							<ui:template>
+								<Text text="{path : 'results>signal_time'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="fitted" filterProperty="fitted">
+							<Label text="Fitted"/>
+							<ui:template>
+								<Text text="{path : 'results>fitted', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="residuals" filterProperty="residuals">
+							<Label text="Residuals"/>
+							<ui:template>
+								<Text text="{path : 'results>residuals', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+					</ui:columns>
+				</ui:table.Table>
+			</IconTabFilter>
+			<IconTabFilter text="Model">
+				<ui:table.Table enableBusyIndicator="true" selectionMode="None" width="100%" rows="{path : 'results>/tables/MODEL'}">
+					<ui:columns>
+						<ui:table.Column sortProperty="key" filterProperty="key">
+							<Label text="Key"/>
+							<ui:template>
+								<Text text="{path : 'results>key'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="value" filterProperty="value">
+							<Label text="Value"/>
+							<ui:template>
+								<Text text="{path : 'results>value'}"/>
+							</ui:template>
+						</ui:table.Column>
+					</ui:columns>
+				</ui:table.Table>
+			</IconTabFilter>
+		</items>
+	</IconTabBar>
+</core:FragmentDefinition>
