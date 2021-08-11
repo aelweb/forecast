@@ -1,0 +1,89 @@
+PROCEDURE "aa.forecast.db.hdb.apl.procedures::forecast" (
+    in DatasetName            varchar(100),
+    in Horizon                integer default 1,
+    in LastTrainingTimePoint  date,
+    in CuttingStrategy        varchar(100) default 'sequential',
+    in ForecastMethod         varchar(100) default 'Default',
+    in ForecastFallbackMethod varchar(100) default 'ExponentialSmoothing',
+    in SmoothingCycleLength   integer      default NULL,
+    in ForcePositiveForecast  varchar(100) default 'false',
+    in ForecastMaxCyclics     integer      default 450,
+    in ForecastMaxLags        integer      default NULL,
+    out operation_config     "aa.forecast.db.hdb.apl::forecast.tt_operation_config",
+    out results              "aa.forecast.db.hdb.apl::forecast.tt_results",
+    out operation_log        "aa.forecast.db.hdb.apl::forecast.tt_operation_log",
+    out summary              "aa.forecast.db.hdb.apl::forecast.tt_summary",
+    out indicators           "aa.forecast.db.hdb.apl::forecast.tt_indicators"
+)
+LANGUAGE SQLSCRIPT SQL SECURITY INVOKER AS
+BEGIN
+    declare FunctionName varchar(255) := 'forecast';
+    --declare cursor coldesc for select position, column_name from sys.table_columns where table_name = 'CashFlows_extrapredictors';
+
+    create local temporary table #forecast_function_header  like "aa.forecast.db.hdb.apl::forecast.tt_function_header";
+    create local temporary table #forecast_operation_config like "aa.forecast.db.hdb.apl::forecast.tt_operation_config";
+    create local temporary table #forecast_variable_descs   like "aa.forecast.db.hdb.apl::forecast.tt_variable_descs";
+    create local temporary table #forecast_variable_roles   like "aa.forecast.db.hdb.apl::forecast.tt_variable_roles";
+
+    create local temporary table #forecast_operation_log    like "aa.forecast.db.hdb.apl::forecast.tt_operation_log";
+    create local temporary table #forecast_summary          like "aa.forecast.db.hdb.apl::forecast.tt_summary";
+    create local temporary table #forecast_indicators       like "aa.forecast.db.hdb.apl::forecast.tt_indicators";
+    create local temporary table #forecast_results          like "aa.forecast.db.hdb.apl::forecast.tt_results";
+
+    -- Insert operation parameters
+    insert into #forecast_function_header values ('Oid', '#42');
+    insert into #forecast_function_header values ('LogLevel', '8');
+
+    if :Horizon                 is not null then insert into #forecast_operation_config values ('APL/Horizon'                 , cast(:Horizon                 as varchar), NULL); end if;
+    if :LastTrainingTimePoint   is not null then insert into #forecast_operation_config values ('APL/LastTrainingTimePoint'   , cast(:LastTrainingTimePoint   as varchar), NULL); end if;
+    if :ForecastMethod          is not null then insert into #forecast_operation_config values ('APL/ForecastMethod'          , cast(:ForecastMethod          as varchar), NULL); end if;
+    if :ForecastFallbackMethod  is not null then insert into #forecast_operation_config values ('APL/ForecastFallbackMethod'  , cast(:ForecastFallbackMethod  as varchar), NULL); end if;
+    if :SmoothingCycleLength    is not null then insert into #forecast_operation_config values ('APL/SmoothingCycleLength'    , cast(:SmoothingCycleLength    as varchar), NULL); end if;
+    if :ForcePositiveForecast   is not null then insert into #forecast_operation_config values ('APL/ForcePositiveForecast'   , cast(:ForcePositiveForecast   as varchar), NULL); end if;
+    if :ForecastMaxCyclics      is not null then insert into #forecast_operation_config values ('APL/ForecastMaxCyclics'      , cast(:ForecastMaxCyclics      as varchar), NULL); end if;
+    if :ForecastMaxLags         is not null then insert into #forecast_operation_config values ('APL/ForecastMaxLags'         , cast(:ForecastMaxLags         as varchar), NULL); end if;
+
+    insert into #forecast_operation_config values ('APL/TimePointColumnName'   , 'signal_time'              , null);
+    insert into #forecast_operation_config values ('APL/ApplyExtraMode'        , 'Forecasts and Error Bars' , null);
+
+    if :DatasetName like '%_extrapredictors'
+    then
+        FunctionName := FunctionName || '_' || DatasetName;
+        exec 'insert into #forecast_variable_descs select * from "aa.forecast.db.data::KxDesc_' || :DatasetName || '";';
+    end if;
+
+    insert into #forecast_variable_descs values (0, 'signal_time'  , 'date'     , 'continuous', 1, 1, null, null, null, null);
+    insert into #forecast_variable_descs values (1, 'signal_value' , 'number'   , 'continuous', 0, 0, null, null, null, null);
+
+    insert into  #forecast_variable_roles values ('signal_time'  , 'input' , NULL, NULL, '#1');
+    insert into  #forecast_variable_roles values ('signal_value' , 'target', NULL, NULL, '#1');
+
+    exec 'call "aa.forecast.db.hdb.apl.afllang::' || FunctionName || '" '
+        || '('
+        || '    #forecast_function_header,'
+        || '    #forecast_operation_config,'
+        || '    #forecast_variable_descs,'
+        || '    #forecast_variable_roles,'
+        || '    "aa.forecast.db.data::' || DatasetName || '",'
+        || '    #forecast_results,'
+        || '    #forecast_operation_log,'
+        || '    #forecast_summary,'
+        || '    #forecast_indicators'
+        || ') with overview';
+
+    operation_config  = select * from #forecast_operation_config;
+    results           = select * from #forecast_results;
+    operation_log     = select * from #forecast_operation_log;
+    summary           = select * from #forecast_summary;
+    indicators        = select * from #forecast_indicators;
+
+    drop table #forecast_function_header;
+    drop table #forecast_operation_config;
+    drop table #forecast_variable_descs;
+    drop table #forecast_variable_roles;
+
+    drop table #forecast_operation_log;
+    drop table #forecast_summary;
+    drop table #forecast_indicators;
+    drop table #forecast_results;
+END;

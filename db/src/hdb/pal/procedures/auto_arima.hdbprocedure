@@ -1,0 +1,66 @@
+PROCEDURE "aa.forecast.db.hdb.pal.procedures::auto_arima" (
+    in DatasetName      varchar(100),
+    in SearchStrategy   integer default 1,
+    in SeasonalPeriod   integer default -1,
+    in ForecastLength   integer default 1,
+    out operation_config          "aa.forecast.db.hdb.pal::common.tt_parameter",
+    out operation_config_forecast "aa.forecast.db.hdb.pal::common.tt_parameter",
+    out fit                       "aa.forecast.db.hdb.pal::arima.tt_fit",
+    out model                     "aa.forecast.db.hdb.pal::arima.tt_model",
+    out output                    "aa.forecast.db.hdb.pal::arima.tt_output"
+)
+LANGUAGE SQLSCRIPT SQL SECURITY INVOKER AS
+BEGIN
+    create local temporary table #auto_arima_dataset_empty             like "aa.forecast.db.hdb.pal::common.tt_dataset";
+    create local temporary table #auto_arima_operation_config          like "aa.forecast.db.hdb.pal::common.tt_parameter";
+    create local temporary table #auto_arima_operation_config_forecast like "aa.forecast.db.hdb.pal::common.tt_parameter";
+    create local temporary table #auto_arima_fit                       like "aa.forecast.db.hdb.pal::arima.tt_fit";
+    create local temporary table #auto_arima_model                     like "aa.forecast.db.hdb.pal::arima.tt_model";
+    create local temporary table #auto_arima_output_raw                like "aa.forecast.db.hdb.pal::arima.tt_output_raw";
+    create local temporary table #auto_arima_output                    like "aa.forecast.db.hdb.pal::arima.tt_output";
+
+    if :SearchStrategy    is not null then insert into #auto_arima_operation_config values ('SEARCH_STRATEGY'    , :SearchStrategy    , null    , null); end if;
+    if :SeasonalPeriod    is not null then insert into #auto_arima_operation_config values ('SEASONAL_PERIOD'    , :SeasonalPeriod    , null    , null); end if;
+
+    exec 'call "aa.forecast.db.hdb.pal.afllang::auto_arima" '
+        || '('
+        || '    "aa.forecast.db.hdb.pal.views::' || DatasetName || '",'
+        || '    #auto_arima_operation_config,'
+        || '    #auto_arima_model,'
+        || '    #auto_arima_fit'
+        || ') with overview';
+
+    if :ForecastLength    is not null then insert into #auto_arima_operation_config_forecast values ('FORECAST_LENGTH' , :ForecastLength    , null    , null); end if;
+
+    exec 'call "aa.forecast.db.hdb.pal.afllang::auto_arima_forecast" '
+        || '('
+        || '    #auto_arima_dataset_empty,'
+        || '    #auto_arima_model,'
+        || '    #auto_arima_operation_config_forecast,'
+        || '    #auto_arima_output_raw'
+        || ') with overview';
+
+    exec 'insert into #auto_arima_output ('
+    || '    select '
+    || '        to_int(rank() over (order by "idx" asc, "signal_time" asc)) as "signal_time", "signal_value", "forecast", "standard_error", "lowerlimit_80", "upperlimit_80",  "lowerlimit_95",  "upperlimit_95"'
+    || '    from ('
+    || '        select 1 as "idx", "signal_time", "signal_value" , null as "forecast", null as "standard_error", null as "lowerlimit_80", null as "upperlimit_80", null as "lowerlimit_95", null as "upperlimit_95" from "aa.forecast.db.hdb.pal.views::' || DatasetName || '"'
+    || '        union all'
+    || '        select 2 as "idx", "signal_time", null, "forecast", "standard_error", "lowerlimit_80", "upperlimit_80",  "lowerlimit_95",  "upperlimit_95" from #auto_arima_output_raw'
+    || '    )'
+    || ');';
+
+    operation_config          = select * from #auto_arima_operation_config;
+    operation_config_forecast = select * from #auto_arima_operation_config_forecast;
+    fit                       = select * from #auto_arima_fit;
+    model                     = select * from #auto_arima_model;
+    output                    = select * from #auto_arima_output order by 1;
+
+    drop table #auto_arima_dataset_empty;
+    drop table #auto_arima_operation_config;
+    drop table #auto_arima_operation_config_forecast;
+    drop table #auto_arima_model;
+    drop table #auto_arima_output_raw;
+    drop table #auto_arima_output;
+    drop table #auto_arima_fit;
+END;

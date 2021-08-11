@@ -1,0 +1,31 @@
+PROCEDURE "aa.forecast.db.hdb.pal.procedures::seasonality_test" (
+    in DatasetName           varchar(100),
+    in Alpha                 double default 0.2,
+    out operation_config     "aa.forecast.db.hdb.pal::common.tt_parameter",
+    out statistic            "aa.forecast.db.hdb.pal::common.tt_statistics",
+    out output               "aa.forecast.db.hdb.pal::seasonality_test.tt_output"
+)
+LANGUAGE SQLSCRIPT SQL SECURITY INVOKER AS
+BEGIN
+    create local temporary table #seasonality_test_operation_config like "aa.forecast.db.hdb.pal::common.tt_parameter";
+    create local temporary table #seasonality_test_statistic        like "aa.forecast.db.hdb.pal::common.tt_statistics";
+    create local temporary table #seasonality_test_output           like "aa.forecast.db.hdb.pal::seasonality_test.tt_output";
+
+    if :Alpha is not null then insert into #seasonality_test_operation_config values ('ALPHA', null, :Alpha, null); end if;
+
+    exec 'call "aa.forecast.db.hdb.pal.afllang::seasonality_test" '
+        || '('
+        || '    "aa.forecast.db.hdb.pal.views::' || DatasetName || '",'
+        || '    #seasonality_test_operation_config,'
+        || '    #seasonality_test_statistic,'
+        || '    #seasonality_test_output'
+        || ') with overview';
+
+    operation_config  = select * from #seasonality_test_operation_config;
+    output            = select * from #seasonality_test_output;
+    statistic         = select * from #seasonality_test_statistic;
+
+    drop table #seasonality_test_operation_config;
+    drop table #seasonality_test_output;
+    drop table #seasonality_test_statistic;
+END;

@@ -1,0 +1,47 @@
+PROCEDURE "aa.forecast.db.hdb.pal.procedures::auto_smoothing" (
+    in DatasetName          varchar(100),
+    in ForecastNum          integer default 1,
+    in AccuracyMeasure      varchar(4) default 'MAPE',
+    in TrainingRatio        double default 1.0,
+    in SeasonalityCriterion double default 0.0000001,
+    out operation_config    "aa.forecast.db.hdb.pal::common.tt_parameter",
+    out statistic           "aa.forecast.db.hdb.pal::common.tt_statistics",
+    out output              "aa.forecast.db.hdb.pal::smoothing.tt_output"
+)
+LANGUAGE SQLSCRIPT SQL SECURITY INVOKER AS
+BEGIN
+    create local temporary table #auto_smoothing_operation_config  like "aa.forecast.db.hdb.pal::common.tt_parameter";
+    create local temporary table #auto_smoothing_statistic         like "aa.forecast.db.hdb.pal::common.tt_statistics";
+    create local temporary table #auto_smoothing_output_raw        like "aa.forecast.db.hdb.pal::smoothing.tt_output_raw";
+    create local temporary table #auto_smoothing_output            like "aa.forecast.db.hdb.pal::smoothing.tt_output";
+
+    insert into #auto_smoothing_operation_config values ('MODELSELECTION', 1 , null, null);
+    if :ForecastNum             is not null then insert into #auto_smoothing_operation_config values ('FORECAST_NUM'          , :ForecastNum    , null                  , null); end if;
+    if :AccuracyMeasure         is not null then insert into #auto_smoothing_operation_config values ('ACCURACY_MEASURE'      , null            , null                  , :AccuracyMeasure); end if;
+    if :TrainingRatio           is not null then insert into #auto_smoothing_operation_config values ('TRAINING_RATIO'        , null            , :TrainingRatio        , null); end if;
+    if :SeasonalityCriterion    is not null then insert into #auto_smoothing_operation_config values ('SEASONALITY_CRITERION' , null            , :SeasonalityCriterion , null); end if;
+
+    exec 'call "aa.forecast.db.hdb.pal.afllang::auto_smoothing" '
+        || '('
+        || '    "aa.forecast.db.hdb.pal.views::' || DatasetName || '",'
+        || '    #auto_smoothing_operation_config,'
+        || '    #auto_smoothing_output_raw,'
+        || '    #auto_smoothing_statistic'
+        || ') with overview';
+
+    exec 'insert into #auto_smoothing_output ('
+    || '    select '
+    || '        ifnull(d."signal_time", f."signal_time") , d."signal_value", "forecast", "lowerlimit_1", "upperlimit_1",  "lowerlimit_2", "upperlimit_2"'
+    || '    from "aa.forecast.db.hdb.pal.views::' || DatasetName || '" d'
+    || '    full outer join #auto_smoothing_output_raw f on d."signal_time" = f."signal_time"'
+    || ');';
+
+    operation_config  = select * from #auto_smoothing_operation_config;
+    statistic         = select * from #auto_smoothing_statistic;
+    output            = select * from #auto_smoothing_output order by 1;
+
+    drop table #auto_smoothing_operation_config;
+    drop table #auto_smoothing_statistic;
+    drop table #auto_smoothing_output_raw;
+    drop table #auto_smoothing_output;
+END;
