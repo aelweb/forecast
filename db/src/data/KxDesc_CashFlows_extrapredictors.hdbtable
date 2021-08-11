@@ -1,0 +1,15 @@
+COLUMN TABLE "aa.forecast.db.data::KxDesc_CashFlows_extrapredictors" (
+    "RANK"          INTEGER CS_INT,
+    "NAME"          VARCHAR(255),
+    "STORAGE"       VARCHAR(20),
+    "VALUETYPE"     VARCHAR(20),
+    "KEYLEVEL"      INTEGER CS_INT,
+    "ORDERLEVEL"    INTEGER CS_INT,
+    "MISSINGSTRING" VARCHAR(255),
+    "GROUPNAME"     VARCHAR(255),
+    "DESCRIPTION"   VARCHAR(255),
+    "OID"           VARCHAR(50),
+    PRIMARY KEY (
+        "RANK"
+    )
+);

@@ -1,0 +1,99 @@
+{
+    "format_version": 1,
+    "imports": [
+        {
+            "column_mappings" : { "signal_time" : "Date", "signal_value" : "Cash"},
+            "import_settings" : { "import_columns" : [ "signal_time", "signal_value"], "include_filter" : [], "exclude_filter" : []},
+            "source_data" : {
+                "data_type" : "CSV", "has_header" : true, "dialect" : "HANA", "type_config" : { "delimiter" : "\t", "do_quote": false },
+                "file_name" : "aa.forecast.db.data::CashFlows.csv"
+            },
+            "target_table" : "aa.forecast.db.data::CashFlows"  
+        },   
+        {
+            "column_mappings" : {"signal_time" : "Date", "signal_value" : "Cash"},
+            "import_settings" : {
+                "import_columns" : [ "signal_time", "signal_value","WorkingDaysIndices", "ReverseWorkingDaysIndices", "MondayMonthInd", "TuesdayMonthInd", "WednesdayMonthInd", "ThursdayMonthInd", "FridayMonthInd", "BeforeLastMonday", "LastMonday", "BeforeLastTuesday", "LastTuesday", "BeforeLastWednesday", "LastWednesday", "BeforeLastThursday", "LastThursday", "BeforeLastFriday", "LastFriday", "Last5WDaysInd", "Last5WDays", "Last4WDaysInd", "Last4WDays", "LastWMonth", "BeforeLastWMonth"],
+                "include_filter" : [], "exclude_filter" : []
+            },
+            "source_data" : {
+                "data_type" : "CSV", "has_header" : true, "dialect" : "HANA", "type_config" : { "delimiter" : "\t", "do_quote": false },
+                "file_name" : "aa.forecast.db.data::CashFlows.csv"
+            },
+            "target_table" : "aa.forecast.db.data::CashFlows_extrapredictors"  
+        },
+        {
+            "column_mappings" : {
+                "RANK" : { "type" : "function", "name" : "range",  "parameters" : {"increment_by" : "1", "start_with" : "1" }},
+                "OID" : {"type" : "constant",  "value" : ""}
+            },
+            "import_settings" : {
+                "import_columns" : [ "RANK", "NAME", "STORAGE", "VALUETYPE", "KEYLEVEL", "ORDERLEVEL", "MISSINGSTRING", "GROUPNAME", "DESCRIPTION", "OID"],
+                "include_filter" : [],
+                "exclude_filter" : [
+                    {"NAME" : "Date"}, { "NAME" : "Cash"}  
+                ]
+            },
+            "source_data" : {
+                "data_type" : "CSV", "has_header" : true, "dialect" : "HANA", "type_config" : { "delimiter" : "\t", "do_quote": false },
+                "file_name" : "aa.forecast.db.data::KxDesc_CashFlows.csv"
+            },
+            "target_table" : "aa.forecast.db.data::KxDesc_CashFlows_extrapredictors"  
+        },        
+        {
+            "column_mappings" : { "signal_time" : "TIME", "signal_value" : "R_ozone-la"},
+            "import_settings" : { "import_columns" : [ "signal_time", "signal_value"], "include_filter" : [], "exclude_filter" : []},
+            "source_data" : {
+                "data_type" : "CSV", "has_header" : true, "dialect" : "HANA", "type_config" : { "delimiter" : "\t", "do_quote": false },
+                "file_name" : "aa.forecast.db.data::Ozone.csv"
+            },
+            "target_table" : "aa.forecast.db.data::Ozone"  
+        },
+        {
+            "column_mappings" : { "signal_time" : "TIME", "signal_value" : "Signal"},
+            "import_settings" : { "import_columns" : [ "signal_time", "signal_value"], "include_filter" : [], "exclude_filter" : []},
+            "source_data" : {
+                "data_type" : "CSV", "has_header" : true, "dialect" : "HANA", "type_config" : { "delimiter" : "\t", "do_quote": false },
+                "file_name" : "aa.forecast.db.data::Lag1AndCycles.csv"
+            },
+            "target_table" : "aa.forecast.db.data::Lag1AndCycles"  
+        },
+        {
+            "column_mappings" : { "signal_time" : "TIME", "signal_value" : "Signal"},
+            "import_settings" : { "import_columns" : [ "signal_time", "signal_value"], "include_filter" : [], "exclude_filter" : []},
+            "source_data" : {
+                "data_type" : "CSV", "has_header" : true, "dialect" : "HANA", "type_config" : { "delimiter" : "\t", "do_quote": false },
+                "file_name" : "aa.forecast.db.data::Lag1AndCyclesAndWn.csv"
+            },
+            "target_table" : "aa.forecast.db.data::Lag1AndCyclesAndWn"  
+        },
+        {
+            "column_mappings" : { "signal_time" : "TIME", "signal_value" : "Signal"},
+            "import_settings" : { "import_columns" : [ "signal_time", "signal_value"], "include_filter" : [], "exclude_filter" : []},
+            "source_data" : {
+                "data_type" : "CSV", "has_header" : true, "dialect" : "HANA", "type_config" : { "delimiter" : "\t", "do_quote": false },
+                "file_name" : "aa.forecast.db.data::TrendAndCyclic.csv"
+            },
+            "target_table" : "aa.forecast.db.data::TrendAndCyclic"  
+        },
+        {
+            "column_mappings" : { "signal_time" : "TIME", "signal_value" : "Signal"},
+            "import_settings" : { "import_columns" : [ "signal_time", "signal_value"], "include_filter" : [], "exclude_filter" : []},
+            "source_data" : {
+                "data_type" : "CSV", "has_header" : true, "dialect" : "HANA", "type_config" : { "delimiter" : "\t", "do_quote": false },
+                "file_name" : "aa.forecast.db.data::TrendAndCyclicAndWn.csv"
+            },
+            "target_table" : "aa.forecast.db.data::TrendAndCyclicAndWn"  
+        },
+        {
+            "column_mappings" : { "signal_time" : "TIME", "signal_value" : "Signal"},
+            "import_settings" : { "import_columns" : [ "signal_time", "signal_value"], "include_filter" : [], "exclude_filter" : []},
+            "source_data" : {
+                "data_type" : "CSV", "has_header" : true, "dialect" : "HANA", "type_config" : { "delimiter" : "\t", "do_quote": false },
+                "file_name" : "aa.forecast.db.data::TrendAndCyclicAnd_4Wn.csv"
+
+            },
+            "target_table" : "aa.forecast.db.data::TrendAndCyclicAnd_4Wn"  
+        }    
+    ]
+}

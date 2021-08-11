@@ -1,0 +1,90 @@
+namespace aa.forecast.db.hdb.apl;
+
+context forecast {
+    table type tt_function_header {
+        "KEY"   : String(50);
+        "VALUE" : String(255);
+    };
+    table type tt_operation_config {
+        "KEY"     : String(1000);
+        "VALUE"   : LargeString;
+        "CONTEXT" : LargeString;
+    };
+    table type tt_variable_descs {
+        "RANK"          : Integer;
+        "NAME"          : String(255);
+        "STORAGE"       : String(10);
+        "VALUETYPE"     : String(10);
+        "KEYLEVEL"      : Integer;
+        "ORDERLEVEL"    : Integer;
+        "MISSINGSTRING" : String(255);
+        "GROUPNAME"     : String(255);
+        "DESCRIPTION"   : String(255);
+        "OID"           : String(255);
+    };
+    table type tt_variable_roles {
+        "NAME"             : String(127);
+        "ROLE"             : String(10);
+        "COMPOSITION_TYPE" : String(10);
+        "COMPONENT_NAME"   : String(127);
+        "OID"              : String(50);
+    };
+    table type tt_operation_log {
+        "OID"       : String(50);
+        "TIMESTAMP" : UTCTimestamp;
+        "LEVEL"     : Integer;
+        "ORIGIN"    : String(50);
+        "MESSAGE"   : LargeString;
+    };
+    table type tt_summary {
+        "OID"   : String(50);
+        "KEY"   : String(100);
+        "VALUE" : String(200);
+    };
+    table type tt_indicators {
+        "OID"      : String(50);
+        "VARIABLE" : String(255);
+        "TARGET"   : String(255);
+        "KEY"      : String(100);
+        "VALUE"    : LargeString;
+        "DETAIL"   : LargeString;
+    };
+    table type tt_results {
+        "signal_time"          : LocalDate;
+        "signal_value"         : Double;
+        "kts_1"                : Double;
+        "kts_1_lowerlimit_95%" : Double;
+        "kts_1_upperlimit_95%" : Double;
+    };
+    table type tt_dataset {
+        "signal_time"  : LocalDate;
+        "signal_value" : Double;
+    };
+    table type tt_dataset_cashflows_extrapredictors {
+        "signal_time"               : LocalDate;
+        "WorkingDaysIndices"        : Integer;
+        "ReverseWorkingDaysIndices" : Integer;
+        "MondayMonthInd"            : Integer;
+        "TuesdayMonthInd"           : Integer;
+        "WednesdayMonthInd"         : Integer;
+        "ThursdayMonthInd"          : Integer;
+        "FridayMonthInd"            : Integer;
+        "BeforeLastMonday"          : Integer;
+        "LastMonday"                : Integer;
+        "BeforeLastTuesday"         : Integer;
+        "LastTuesday"               : Integer;
+        "BeforeLastWednesday"       : Integer;
+        "LastWednesday"             : Integer;
+        "BeforeLastThursday"        : Integer;
+        "LastThursday"              : Integer;
+        "BeforeLastFriday"          : Integer;
+        "LastFriday"                : Integer;
+        "Last5WDaysInd"             : Integer;
+        "Last5WDays"                : Integer;
+        "Last4WDaysInd"             : Integer;
+        "Last4WDays"                : Integer;
+        "LastWMonth"                : Integer;
+        "BeforeLastWMonth"          : Integer;
+		"signal_value"              : Double;
+    };
+};

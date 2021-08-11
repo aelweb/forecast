@@ -1,0 +1,7 @@
+COLUMN TABLE "aa.forecast.db.data::TrendAndCyclic"(
+    "signal_time"  DATE CS_DAYDATE NOT NULL,
+    "signal_value" DOUBLE CS_DOUBLE,
+    PRIMARY KEY (
+        "signal_time"
+    )
+);

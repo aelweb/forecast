@@ -1,0 +1,15 @@
+{
+    "area" : "APL_AREA",
+    "function" : "FORECAST",
+    "parameters" : [
+        { "direction" : "IN",  "type" : "aa.forecast.db.hdb.apl::forecast.tt_function_header"},
+        { "direction" : "IN",  "type" : "aa.forecast.db.hdb.apl::forecast.tt_operation_config"},
+        { "direction" : "IN",  "type" : "aa.forecast.db.hdb.apl::forecast.tt_variable_descs"},
+        { "direction" : "IN",  "type" : "aa.forecast.db.hdb.apl::forecast.tt_variable_roles"},
+        { "direction" : "IN",  "type" : "aa.forecast.db.hdb.apl::forecast.tt_dataset_cashflows_extrapredictors"},
+        { "direction" : "OUT", "type" : "aa.forecast.db.hdb.apl::forecast.tt_results"},
+        { "direction" : "OUT", "type" : "aa.forecast.db.hdb.apl::forecast.tt_operation_log"},
+        { "direction" : "OUT", "type" : "aa.forecast.db.hdb.apl::forecast.tt_summary"},
+        { "direction" : "OUT", "type" : "aa.forecast.db.hdb.apl::forecast.tt_indicators"}
+    ]
+}
