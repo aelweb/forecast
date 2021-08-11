@@ -1,0 +1,21 @@
+service {
+  "aa.forecast.db.data::CashFlows"                 as "apl_CashFlows";
+  "aa.forecast.db.data::CashFlows_extrapredictors" as "apl_CashFlows_extrapredictors";
+  "aa.forecast.db.data::Ozone"                     as "apl_Ozone";
+  "aa.forecast.db.data::Lag1AndCycles"             as "apl_Lag1AndCycles";
+  "aa.forecast.db.data::Lag1AndCyclesAndWn"        as "apl_Lag1AndCyclesAndWn";
+  "aa.forecast.db.data::TrendAndCyclic"            as "apl_TrendAndCyclic";
+  "aa.forecast.db.data::TrendAndCyclicAnd_4Wn"     as "apl_TrendAndCyclicAnd_4Wn";
+  "aa.forecast.db.data::TrendAndCyclicAndWn"       as "apl_TrendAndCyclicAndWn";  
+
+  "aa.forecast.db.hdb.pal.views::CashFlows"              as "pal_CashFlows"              key ("signal_time");
+  "aa.forecast.db.hdb.pal.views::Ozone"                  as "pal_Ozone"                  key ("signal_time");
+  "aa.forecast.db.hdb.pal.views::Lag1AndCycles"          as "pal_Lag1AndCycles"          key ("signal_time");
+  "aa.forecast.db.hdb.pal.views::Lag1AndCyclesAndWn"     as "pal_Lag1AndCyclesAndWn"     key ("signal_time");
+  "aa.forecast.db.hdb.pal.views::TrendAndCyclic"         as "pal_TrendAndCyclic"         key ("signal_time");
+  "aa.forecast.db.hdb.pal.views::TrendAndCyclicAnd_4Wn"  as "pal_TrendAndCyclicAnd_4Wn"  key ("signal_time");
+  "aa.forecast.db.hdb.pal.views::TrendAndCyclicAndWn"    as "pal_TrendAndCyclicAndWn"    key ("signal_time");  
+}
+settings {
+  support null;
+}
