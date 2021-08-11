@@ -1,0 +1,23 @@
+{
+	"key": "seasonality_test",
+	"library": "pal",
+	"label": "PAL Seasonality Test",
+	"service": {
+		"url": "/xsjs/pal/seasonality_test.xsjs",
+		"method": "POST",
+		"params": {
+			"ALPHA": {
+				"label": "Autocorrelation coefficient",
+				"default": "0.2",
+				"step": 0.1,
+				"min": 0,
+				"max": 1,
+				"description": "The criterion for the autocorrelation coefficient. The value range is (0, 1). A larger value indicates stricter requirement for seasonality."
+			}
+		}
+	},
+	"default_payload": {
+		"DATASETNAME": null,
+		"ALPHA":  0.2
+	}
+}

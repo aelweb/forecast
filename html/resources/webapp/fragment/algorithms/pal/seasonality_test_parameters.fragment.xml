@@ -1,0 +1,21 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:ui="sap.ui">
+	<ui:layout.form.Form editable="true">
+		<ui:layout>
+			<ui:layout.form.ResponsiveGridLayout columnsL="1" columnsM="1"/>
+		</ui:layout>
+		<ui:formContainers>
+			<ui:layout.form.FormContainer>
+				<ui:formElements>
+					<ui:layout.form.FormElement label="{pal_seasonality_test>/service/params/ALPHA/label}">
+						<ui:fields>
+							<Slider progress="true" value="{payload>/ALPHA}" step="{pal_seasonality_test>/service/params/ALPHA/step}"
+								min="{pal_seasonality_test>/service/params/ALPHA/min}" max="{pal_seasonality_test>/service/params/ALPHA/max}" enableTickmarks="true"
+								inputsAsTooltips="true" tooltip="{pal_seasonality_test>/service/params/ALPHA/description}"/>
+							<Input type="Number" value="{payload>/ALPHA}" enabled="false"/>
+						</ui:fields>
+					</ui:layout.form.FormElement>
+				</ui:formElements>
+			</ui:layout.form.FormContainer>
+		</ui:formContainers>
+	</ui:layout.form.Form>
+</core:FragmentDefinition>

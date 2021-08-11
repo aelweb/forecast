@@ -1,0 +1,76 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:ui="sap.ui" xmlns:viz="sap.viz">
+	<IconTabBar>
+		<items>
+			<IconTabFilter text="Results">
+				<viz:ui5.controls.Popover id="result_popover"/>
+				<viz:ui5.controls.VizFrame width="100%" id="result_viz_frame" uiConfig="{applicationSet:'fiori'}" vizType='timeseries_line'>
+					<viz:dataset>
+						<viz:ui5.data.FlattenedDataset data="{path : 'results>/tables/OUTPUT'}">
+							<viz:dimensions>
+								<viz:ui5.data.DimensionDefinition name="Date" value="{path : 'results>signal_time'}" dataType="date"/>
+							</viz:dimensions>
+							<viz:measures>
+								<viz:ui5.data.MeasureDefinition name="Seasonal" value="{path : 'results>seasonal'}"/>
+								<viz:ui5.data.MeasureDefinition name="Trend" value="{path : 'results>trend'}"/>
+								<viz:ui5.data.MeasureDefinition name="Random" value="{path : 'results>random'}"/>
+							</viz:measures>
+						</viz:ui5.data.FlattenedDataset>
+					</viz:dataset>
+					<viz:feeds>
+						<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Seasonal"/>
+						<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Trend"/>
+						<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Random"/>
+						<viz:ui5.controls.common.feeds.FeedItem uid="timeAxis" type="Dimension" values="Date"/>
+					</viz:feeds>
+				</viz:ui5.controls.VizFrame>
+				<ui:table.Table enableBusyIndicator="true" selectionMode="None" width="100%"
+					rows="{path : 'results>/tables/OUTPUT', sorter: { path: 'signal_time', descending: true} }">
+					<ui:columns>
+						<ui:table.Column sortProperty="signal_time" filterProperty="signal_time">
+							<Label text="Date"/>
+							<ui:template>
+								<Text text="{path : 'results>signal_time'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="seasonal" filterProperty="seasonal">
+							<Label text="Seasonal"/>
+							<ui:template>
+								<Text text="{path : 'results>seasonal', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="trend" filterProperty="trend">
+							<Label text="Trend"/>
+							<ui:template>
+								<Text text="{path : 'results>trend', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="random" filterProperty="random">
+							<Label text="Random"/>
+							<ui:template>
+								<Text text="{path : 'results>random', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+					</ui:columns>
+				</ui:table.Table>
+			</IconTabFilter>
+			<IconTabFilter text="Statistics">
+				<ui:table.Table enableBusyIndicator="true" selectionMode="None" width="100%" rows="{path : 'results>/tables/STATISTIC'}">
+					<ui:columns>
+						<ui:table.Column sortProperty="stat_name" filterProperty="stat_name">
+							<Label text="Statistics name"/>
+							<ui:template>
+								<Text text="{path : 'results>stat_name'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="stat_value" filterProperty="stat_value">
+							<Label text="Statistics Value"/>
+							<ui:template>
+								<Text text="{path : 'results>stat_value'}"/>
+							</ui:template>
+						</ui:table.Column>
+					</ui:columns>
+				</ui:table.Table>
+			</IconTabFilter>
+		</items>
+	</IconTabBar>
+</core:FragmentDefinition>
