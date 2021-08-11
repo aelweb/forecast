@@ -1,0 +1,93 @@
+{
+	"key": "forecast",
+	"library": "apl",
+	"label": "APL Forecast Algorithm",
+	"service": {
+		"url": "/xsjs/apl/forecast.xsjs",
+		"method": "POST",
+		"params": {
+			"HORIZON": {
+				"label": "Horizon",
+				"max": 100,
+				"description": "Number of forecast time points"
+			},
+			"LASTTRAININGTIMEPOINT": {
+				"label": "Last Training Time Point",
+				"description": "Value in the time point column which represents the last point in time for the training dataset"
+			},
+			"CUTTINGSTRATEGY": {
+				"label": "Cutting Strategy",
+				"default": "sequential",
+				"values": [{
+					"key": "sequential",
+					"label": "sequential"
+				}, {
+					"key": "sequential with no test",
+					"label": "sequential with no test"
+				}],
+				"description": "The Cutting Strategy defines how a training set is cut under three subsets (training, validation and testing datasets) when needed. Depending on the model (model type, number of targets ...) not all Cutting Strategies can be used. See Automated Analytics documentation for details."
+			},
+			"FORECASTMETHOD": {
+				"label": "Forecast Method",
+				"values": [{
+					"key": "Default",
+					"label": "Default"
+				}, {
+					"key": "LinearRegression",
+					"label": "Linear Regression"
+				}, {
+					"key": "ExponentialSmoothing",
+					"label": "Exponential Smoothing"
+				}],
+				"description": "Uses a forecast method different from the default Automated Analytics time-series algorithm"
+			},
+			"FORECASTFALLBACKMETHOD": {
+				"label": "Forecast Fallback Method",
+				"values": [{
+					"key": "LinearRegression",
+					"label": "Linear Regression"
+				}, {
+					"key": "ExponentialSmoothing",
+					"label": "Exponential Smoothing"
+				}],
+				"description": "Sets the method that will be used if the one specified with APL/ForecastMethod fails, for example when there are too few data points"
+			},
+			"SMOOTHINGCYCLELENGTH": {
+				"label": "Smoothing Cycle Length",
+				"description": "Sets the cycle/seasonal length to be used for the smoothing instead of the cycle length candidates automatically determined by the Automated Analytics engine based on the time granularity, for example: month -> 4 (quarterly) or 12 (yearly)."
+			},
+			"FORCEPOSITIVEFORECAST": {
+				"label": "Force Positive Forecast",
+				"values": [{
+					"key": "true",
+					"label": "true"
+				}, {
+					"key": "false",
+					"label": "false"
+				}],
+				"description": "Activates a mode where the negative forecasts are ignored, that is, replaced with zero."
+			},
+			"FORECASTMAXCYCLICS": {
+				"label": "Forecast Max Cyclics",
+				"default": 450,
+				"description": "Length of the longest cycle the model will try to detect. Controls the way that the model analyzes the periodicities in the signal. Also limited by the size of the training dataset. You can disable the cyclic analysis by setting this parameter to 0."
+			},
+			"FORECASTMAXLAGS": {
+				"label": "Forecast Max Lags",
+				"description": "Defines the maximum dependency of the signal on its own past values. Controls the way that the model analyzes the random fluctuations in the signal. You can set this parameter to 0 to disable the fluctuations analysis."
+			}
+		}
+	},
+	"default_payload": {
+		"DATASETNAME": null,
+		"HORIZON": 20,
+		"LASTTRAININGTIMEPOINT": null,
+		"CUTTINGSTRATEGY": "sequential",
+		"FORECASTMETHOD": "Default",
+		"FORECASTFALLBACKMETHOD": "ExponentialSmoothing",
+		"SMOOTHINGCYCLELENGTH": null,
+		"FORCEPOSITIVEFORECAST": "false",
+		"FORECASTMAXCYCLICS": 450,
+		"FORECASTMAXLAGS": null
+	}
+}

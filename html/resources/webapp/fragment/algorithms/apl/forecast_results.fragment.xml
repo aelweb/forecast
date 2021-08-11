@@ -1,0 +1,137 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:ui="sap.ui" xmlns:viz="sap.viz">
+	<IconTabBar>
+		<items>
+			<IconTabFilter text="Results">
+				<viz:ui5.controls.Popover id="result_popover"/>
+				<viz:ui5.controls.VizFrame width="100%" id="result_viz_frame" uiConfig="{applicationSet:'fiori'}" vizType='timeseries_line'>
+					<viz:dataset>
+						<viz:ui5.data.FlattenedDataset data="{path : 'results>/tables/RESULTS'}">
+							<viz:dimensions>
+								<viz:ui5.data.DimensionDefinition name="Date" value="{path : 'results>signal_time'}" dataType="date"/>
+							</viz:dimensions>
+							<viz:measures>
+								<viz:ui5.data.MeasureDefinition name="Original Value" value="{path : 'results>signal_value'}"/>
+								<viz:ui5.data.MeasureDefinition name="Forecast" value="{path : 'results>kts_1'}"/>
+								<viz:ui5.data.MeasureDefinition name="Lower Limit" value="{path : 'results>kts_1_lowerlimit_95%'}"/>
+								<viz:ui5.data.MeasureDefinition name="Upper Limit" value="{path : 'results>kts_1_upperlimit_95%'}"/>
+							</viz:measures>
+						</viz:ui5.data.FlattenedDataset>
+					</viz:dataset>
+					<viz:feeds>
+						<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Original Value"/>
+						<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Forecast"/>
+						<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Lower Limit"/>
+						<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Upper Limit"/>
+						<viz:ui5.controls.common.feeds.FeedItem uid="timeAxis" type="Dimension" values="Date"/>
+					</viz:feeds>
+				</viz:ui5.controls.VizFrame>
+				<ui:table.Table enableBusyIndicator="true" selectionMode="None" width="100%" rows="{path : 'results>/tables/RESULTS', sorter: { path: 'signal_time', 	descending: true} }">
+					<ui:columns>
+						<ui:table.Column sortProperty="signal_time" filterProperty="signal_time">
+							<Label text="Date"/>
+							<ui:template>
+								<Text text="{path : 'results>signal_time', formatter : '.formatter.formatDate'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="signal_value" filterProperty="signal_value">
+							<Label text="Original Value"/>
+							<ui:template>
+								<Text text="{path : 'results>signal_value', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="kts_1" filterProperty="kts_1">
+							<Label text="Forecast"/>
+							<ui:template>
+								<Text text="{path : 'results>kts_1', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="kts_1_lowerlimit_95%" filterProperty="kts_1_lowerlimit_95%">
+							<Label text="Lower Limit"/>
+							<ui:template>
+								<Text text="{path : 'results>kts_1_lowerlimit_95%', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="kts_1_upperlimit_95%" filterProperty="kts_1_upperlimit_95%">
+							<Label text="Upper Limit"/>
+							<ui:template>
+								<Text text="{path : 'results>kts_1_upperlimit_95%', formatter : '.formatter.formatNumber'}"/>
+							</ui:template>
+						</ui:table.Column>
+					</ui:columns>
+				</ui:table.Table>
+			</IconTabFilter>
+			<IconTabFilter text="Operation Config">
+				<ui:table.Table enableBusyIndicator="true" selectionMode="None" width="100%" rows="{path : 'results>/tables/OPERATION_CONFIG'}">
+					<ui:columns>
+						<ui:table.Column sortProperty="KEY" filterProperty="KEY" width="50%">
+							<Label text="Key"/>
+							<ui:template>
+								<Text text="{path : 'results>KEY'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="VALUE" filterProperty="VALUE" width="50%">
+							<Label text="Value"/>
+							<ui:template>
+								<Text text="{path : 'results>VALUE'}"/>
+							</ui:template>
+						</ui:table.Column>
+					</ui:columns>
+				</ui:table.Table>
+			</IconTabFilter>
+			<IconTabFilter text="Summary">
+				<ui:table.Table enableBusyIndicator="true" selectionMode="None" width="100%" rows="{path : 'results>/tables/SUMMARY'}">
+					<ui:columns>
+						<ui:table.Column sortProperty="OID" filterProperty="OID" width="50%">
+							<Label text="OID"/>
+							<ui:template>
+								<Text text="{path : 'results>OID'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="KEY" filterProperty="KEY" width="50%">
+							<Label text="Key"/>
+							<ui:template>
+								<Text text="{path : 'results>KEY'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="VALUE" filterProperty="VALUE" width="50%">
+							<Label text="Value"/>
+							<ui:template>
+								<Text text="{path : 'results>VALUE'}"/>
+							</ui:template>
+						</ui:table.Column>
+					</ui:columns>
+				</ui:table.Table>
+			</IconTabFilter>
+			<IconTabFilter text="Operation Log">
+				<ui:table.Table enableBusyIndicator="true" selectionMode="None" width="100%" rows="{path : 'results>/tables/OPERATION_LOG'}">
+					<ui:columns>
+						<ui:table.Column sortProperty="TIMESTAMP" filterProperty="TIMESTAMP">
+							<Label text="TIMESTAMP"/>
+							<ui:template>
+								<Text text="{path : 'results>TIMESTAMP', formatter : '.formatter.formatDate'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="LEVEL" filterProperty="LEVEL">
+							<Label text="Level"/>
+							<ui:template>
+								<Text text="{path : 'results>LEVEL'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="ORIGIN" filterProperty="ORIGIN">
+							<Label text="Origin"/>
+							<ui:template>
+								<Text text="{path : 'results>ORIGIN'}"/>
+							</ui:template>
+						</ui:table.Column>
+						<ui:table.Column sortProperty="MESSAGE" filterProperty="MESSAGE">
+							<Label text="Message"/>
+							<ui:template>
+								<Text text="{path : 'results>MESSAGE'}"/>
+							</ui:template>
+						</ui:table.Column>
+					</ui:columns>
+				</ui:table.Table>
+			</IconTabFilter>
+		</items>
+	</IconTabBar>
+</core:FragmentDefinition>

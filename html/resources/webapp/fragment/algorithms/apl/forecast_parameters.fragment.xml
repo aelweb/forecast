@@ -1,0 +1,82 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:ui="sap.ui">
+	<ui:layout.form.Form editable="true">
+		<ui:layout>
+			<ui:layout.form.ResponsiveGridLayout columnsL="1" columnsM="1"/>
+		</ui:layout>
+		<ui:formContainers>
+			<ui:layout.form.FormContainer>
+				<ui:formElements>
+					<ui:layout.form.FormElement label="{apl_forecast>/service/params/LASTTRAININGTIMEPOINT/label}">
+						<ui:fields>
+							<Input type="Text" value="{path : 'payload>/LASTTRAININGTIMEPOINT', formatter: '.formatter.formatDate'}" width="100%" enabled="false"
+								required="true" tooltip="{apl_forecast>/service/params/LASTTRAININGTIMEPOINT/description}"/>
+						</ui:fields>
+					</ui:layout.form.FormElement>
+					<ui:layout.form.FormElement label="{apl_forecast>/service/params/HORIZON/label}">
+						<ui:fields>
+							<Slider progress="true" value="{payload>/HORIZON}" step="1" min="1" max="{apl_forecast>/service/params/HORIZON/max}"
+								enableTickmarks="true" inputsAsTooltips="true" tooltip="{apl_forecast>/service/params/HORIZON/description}"/>
+							<Input type="Number" value="{payload>/HORIZON}" enabled="false"/>
+						</ui:fields>
+					</ui:layout.form.FormElement>
+					<ui:layout.form.FormElement label="{apl_forecast>/service/params/CUTTINGSTRATEGY/label}">
+						<ui:fields>
+							<Select selectedItem="{payload>/CUTTINGSTRATEGY}" items="{apl_forecast>/service/params/CUTTINGSTRATEGY/values}"
+								tooltip="{apl_forecast>/service/params/CUTTINGSTRATEGY/description}">
+								<items>
+									<ui:core.ListItem text="{apl_forecast>label}" key="{apl_forecast>key}"/>
+								</items>
+							</Select>
+						</ui:fields>
+					</ui:layout.form.FormElement>
+					<ui:layout.form.FormElement label="{apl_forecast>/service/params/FORECASTMETHOD/label}">
+						<ui:fields>
+							<Select selectedItem="{payload>/FORECASTMETHOD}" items="{apl_forecast>/service/params/FORECASTMETHOD/values}"
+								tooltip="{apl_forecast>/service/params/FORECASTMETHOD/description}">
+								<items>
+									<ui:core.ListItem text="{apl_forecast>label}" key="{apl_forecast>key}"/>
+								</items>
+							</Select>
+						</ui:fields>
+					</ui:layout.form.FormElement>
+					<ui:layout.form.FormElement label="{apl_forecast>/service/params/FORECASTFALLBACKMETHOD/label}">
+						<ui:fields>
+							<Select selectedItem="{payload>/FORECASTFALLBACKMETHOD}" items="{apl_forecast>/service/params/FORECASTFALLBACKMETHOD/values}"
+								tooltip="{apl_forecast>/service/params/FORECASTFALLBACKMETHOD/description}">
+								<items>
+									<ui:core.ListItem text="{apl_forecast>label}" key="{apl_forecast>key}"/>
+								</items>
+							</Select>
+						</ui:fields>
+					</ui:layout.form.FormElement>
+					<ui:layout.form.FormElement label="{apl_forecast>/service/params/SMOOTHINGCYCLELENGTH/label}">
+						<ui:fields>
+							<Input type="Number" value="{payload>/SMOOTHINGCYCLELENGTH}"
+								tooltip="{apl_forecast>/service/params/SMOOTHINGCYCLELENGTH/description}"/>
+						</ui:fields>
+					</ui:layout.form.FormElement>
+					<ui:layout.form.FormElement label="{apl_forecast>/service/params/FORCEPOSITIVEFORECAST/label}">
+						<ui:fields>
+							<Select selectedItem="{payload>/FORCEPOSITIVEFORECAST}" items="{apl_forecast>/service/params/FORCEPOSITIVEFORECAST/values}"
+								tooltip="{apl_forecast>/service/params/FORCEPOSITIVEFORECAST/description}">
+								<items>
+									<ui:core.ListItem text="{apl_forecast>label}" key="{apl_forecast>key}"/>
+								</items>
+							</Select>
+						</ui:fields>
+					</ui:layout.form.FormElement>
+					<ui:layout.form.FormElement label="{apl_forecast>/service/params/FORECASTMAXCYCLICS/label}">
+						<ui:fields>
+							<Input type="Number" value="{payload>/FORECASTMAXCYCLICS}" tooltip="{apl_forecast>/service/params/FORECASTMAXCYCLICS/description}"/>
+						</ui:fields>
+					</ui:layout.form.FormElement>
+					<ui:layout.form.FormElement label="{apl_forecast>/service/params/FORECASTMAXLAGS/label}">
+						<ui:fields>
+							<Input type="Number" value="{payload>/FORECASTMAXLAGS}" tooltip="{apl_forecast>/service/params/FORECASTMAXLAGS/description}"/>
+						</ui:fields>
+					</ui:layout.form.FormElement>
+				</ui:formElements>
+			</ui:layout.form.FormContainer>
+		</ui:formContainers>
+	</ui:layout.form.Form>
+</core:FragmentDefinition>

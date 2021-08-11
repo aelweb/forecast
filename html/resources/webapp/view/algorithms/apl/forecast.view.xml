@@ -1,0 +1,36 @@
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:ui="sap.ui"
+ controllerName="forecast.html.controller.algorithms.apl.forecast"
+	displayBlock="true">
+	<App id="idAppControl">
+		<Page showHeader="true" showNavButton="true" navButtonPress="onNavHome" title="Forecast - APL Forecast">
+			<content>
+				<ui:core.Fragment fragmentName="forecast.html.fragment.display_list" type="XML"/>
+				<TextArea wrapping="true" editable="false" width="100%" visible="{= !${default>/selected/dataset/hasExtraPredictors} }"
+					value="Select your last training point. Then set the parameters, and press Execute"/>
+				<TextArea wrapping="true" editable="false" width="100%" visible="{= !!${default>/selected/dataset/hasExtraPredictors} }"
+					value="Select your last training point. When extra predictors are available, select only from rows where a value is available (empty value will trigger an error). Then set the parameters, and press Execute."/>
+				<IconTabBar expandable="false" visible="{config>/enableSelectDataset}" id="tab">
+					<items>
+						<IconTabFilter key="date" text="Select the Last Training Time Point">
+							<ui:core.Fragment fragmentName="forecast.html.fragment.display_data" type="XML"/>
+						</IconTabFilter>
+						<IconTabFilter key="params" text="Set The APL Algorithm Execution Parameters" visible="{= !!${payload>/hasDate} }">
+							<ui:core.Fragment fragmentName="forecast.html.fragment.algorithms.apl.forecast_parameters" type="XML"/>
+							<Button text="Execute" enabled="{= !!${payload>/hasDate} }" press="onPressExecute"/>
+						</IconTabFilter>
+						<IconTabFilter key="result" text="Results" visible="{= !!${results>/hasResult} }">
+							<ui:core.Fragment fragmentName="forecast.html.fragment.algorithms.apl.forecast_results" type="XML"/>
+						</IconTabFilter>
+					</items>
+				</IconTabBar>
+			</content>
+			<footer>
+				<Bar>
+					<contentLeft>
+						<Button text="Back" press="onNavHome"/>
+					</contentLeft>
+				</Bar>
+			</footer>
+		</Page>
+	</App>
+</mvc:View>
