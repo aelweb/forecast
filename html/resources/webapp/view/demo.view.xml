@@ -1,11 +1,23 @@
-<mvc:View controllerName="forecast.html.controller.demo" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
-	<Shell id="shell">
-		<App id="app">
-			<pages>
-				<Page id="page" title="{i18n>title}">
-					<content></content>
-				</Page>
-			</pages>
-		</App>
-	</Shell>
+<mvc:View displayBlock="true" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:ui="sap.ui"
+	xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" controllerName="forecast.html.controller.demo">
+	<App id="idAppControl">
+		<Page showHeader="true" title="Forecast">
+			<content>
+				<ui:core.Fragment fragmentName="forecast.html.fragment.display_list" type="XML"/>
+				<TextArea wrapping="true" editable="false" width="100%" value="Select an Algorithm and a Dataset, then click on Next."/>
+				<Panel visible="{= !!${config>/selectedDatasetKey} }">
+					<content>
+						<ui:core.Fragment fragmentName="forecast.html.fragment.display_data" type="XML"/>
+					</content>
+				</Panel>
+			</content>
+			<footer>
+				<Bar>
+					<contentRight>
+						<Button text="Next" enabled="{config>/enableNext}" press="onPressNext"/>
+					</contentRight>
+				</Bar>
+			</footer>
+		</Page>
+	</App>
 </mvc:View>

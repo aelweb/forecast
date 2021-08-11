@@ -1,5 +1,15 @@
 {
-	"welcomeFile": "webapp/index.html",
-	"authenticationMethod": "none",
-	"routes": []
+    "welcomeFile": "webapp/index.html",
+    "authenticationMethod": "none",
+    "routes": [{
+        "source": "/xsjs/(.*)(.xsjs)",
+        "destination": "forecast_api",
+        "csrfProtection": true,
+        "authenticationType": "none"
+    }, {
+        "source": "/xsodata/(.*)(.xsodata)",
+        "destination": "forecast_api",
+        "csrfProtection": true,
+        "authenticationType": "none"
+    }]
 }

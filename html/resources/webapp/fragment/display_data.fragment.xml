@@ -1,0 +1,42 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified" xmlns:ui="sap.ui" xmlns:viz="sap.viz"
+	xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<ui:table.Table id="table" visibleRowCount="5" selectionMode="Single" enableBusyIndicator="true" rowSelectionChange="onTableSelectionChange" cellClick="onTableSelectionChange">
+		<ui:columns>
+			<ui:table.Column sortProperty="signal_time" filterProperty="signal_time" width="30%">
+				<Label text="Date"/>
+				<ui:template>
+					<Text text="{path : 'odata>signal_time', formatter: '.formatter.formatNumberOrDate'}"/>
+				</ui:template>
+			</ui:table.Column>
+			<ui:table.Column sortProperty="signal_value" filterProperty="signal_value" width="30%">
+				<Label text="Value"/>
+				<ui:template>
+					<Text text="{path : 'odata>signal_value', formatter: '.formatter.formatNumber'}"/>
+				</ui:template>
+			</ui:table.Column>
+			<ui:table.Column width="10%" visible="{= !!${default>/selected/dataset/hasExtraPredictors} }">
+				<Label text="Extra Predictors"/>
+				<ui:template>
+					<Button icon="sap-icon://search" press="onPressPopover" custom:id="{odata>signal_time}"/>
+				</ui:template>
+			</ui:table.Column>
+		</ui:columns>
+	</ui:table.Table>
+	<viz:ui5.controls.Popover id="popover"/>
+	<viz:ui5.controls.VizFrame id="viz_frame" width="100%" uiConfig="{applicationSet:'fiori'}" vizType="timeseries_line">
+		<viz:dataset>
+			<viz:ui5.data.FlattenedDataset id="viz_ds">
+				<viz:dimensions>
+					<viz:ui5.data.DimensionDefinition name="Date" value="{path : 'odata>signal_time'}" dataType="date"/>
+				</viz:dimensions>
+				<viz:measures>
+					<viz:ui5.data.MeasureDefinition name="Value" value="{path : 'odata>signal_value'}"/>
+				</viz:measures>
+			</viz:ui5.data.FlattenedDataset>
+		</viz:dataset>
+		<viz:feeds>
+			<viz:ui5.controls.common.feeds.FeedItem uid="valueAxis" type="Measure" values="Value"/>
+			<viz:ui5.controls.common.feeds.FeedItem uid="timeAxis" type="Dimension" values="Date"/>
+		</viz:feeds>
+	</viz:ui5.controls.VizFrame>
+</core:FragmentDefinition>

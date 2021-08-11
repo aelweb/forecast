@@ -12,6 +12,15 @@
 		"sourceTemplate": {
 			"id": "hanatemplates.basicSAPUI5ApplicationProject",
 			"version": "0.0.0"
+		},
+		"dataSources": {
+			"data.xsodata": {
+				"uri": "/xsodata/data.xsodata/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0"
+				}
+			}
 		}
 	},
 
@@ -64,6 +73,27 @@
 				"settings": {
 					"bundleName": "forecast.html.i18n.i18n"
 				}
+			},
+			"odata": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"preload": false,
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "Default",
+					"defaultCountMode": "Request",
+					"useBatch": false
+				},
+				"dataSource": "data.xsodata"
+			},
+			"config": {
+				"type": "sap.ui.model.json.JSONModel",
+				"preload": true,
+				"uri": "model/config.json"
+			},
+			"default": {
+				"type": "sap.ui.model.json.JSONModel",
+				"preload": true,
+				"uri": "model/default.json"
 			}
 		},
 		"resources": {
@@ -81,16 +111,15 @@
 				"controlId": "idAppControl"
 			},
 			"routes": [{
-				"name": "RouteView1",
-				"pattern": "RouteView1",
-				"target": ["TargetView1"]
+				"name": "home",
+				"pattern": "",
+				"target": "demo"
 			}],
 			"targets": {
-				"TargetView1": {
-					"viewType": "XML",
-					"transition": "slide",
+				"demo": {
 					"clearAggregation": true,
-					"viewName": "View1"
+					"viewName": "demo",
+					"viewLevel": 1
 				}
 			}
 		}

@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified" xmlns:ui="sap.ui">
+	<ui:layout.form.Form editable="true">
+		<ui:layout>
+			<ui:layout.form.ResponsiveGridLayout columnsL="1" columnsM="1"/>
+		</ui:layout>
+		<ui:formContainers>
+			<ui:layout.form.FormContainer>
+				<ui:formElements>
+					<ui:layout.form.FormElement label="{default>/algorithms/label}">
+						<ui:fields>
+							<Select id="algorithm" items="{default>/algorithms/items}" forceSelection="false" tooltip="{default>/algorithms/description}" selectedKey="{config>/selectedAlgorithmKey}"
+								change="onSelectionChangeAlgorithm" enabled="{config>/enableSelectAlgorithm}">
+								<items>
+									<ui:core.ListItem text="{default>label}" key="{default>key}"/>
+								</items>
+							</Select>
+						</ui:fields>
+					</ui:layout.form.FormElement>
+					<ui:layout.form.FormElement label="{default>/datasets/label}">
+						<ui:fields>
+							<Select id="dataset" items="{default>/datasets/items}" forceSelection="false" tooltip="{default>/datasets/description}" selectedKey="{config>/selectedDatasetKey}"
+								change="onSelectionChangeDataset" enabled="{config>/enableSelectDataset}">
+								<items>
+									<ui:core.ListItem text="{default>label}" key="{default>key}"/>
+								</items>
+							</Select>
+						</ui:fields>
+					</ui:layout.form.FormElement>
+				</ui:formElements>
+			</ui:layout.form.FormContainer>
+		</ui:formContainers>
+	</ui:layout.form.Form>
+</core:FragmentDefinition>

@@ -1,0 +1,63 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified" xmlns:ui="sap.ui">
+	<Popover title="CashFlows With Extra Predictors" class="sapUiContentPadding" placement="Bottom" showHeader="true">
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</footer>
+		<ui:layout.form.SimpleForm editable="false" layout="ResponsiveGridLayout" labelSpanL="9" labelSpanM="9" labelSpanS="9" columnsXL="3"
+			columnsL="3" columnsM="3">
+			<ui:content>
+				<core:Title text="Indices"/>
+				<Label design="Bold" text="Working Days Indices"/>
+				<Text text="{odata>WorkingDaysIndices}"/>
+				<Label design="Bold" text="Reverse Working Days Indices"/>
+				<Text text="{odata>ReverseWorkingDaysIndices}"/>
+				<Label design="Bold" text="Monday Month Indices"/>
+				<Text text="{odata>MondayMonthInd}"/>
+				<Label design="Bold" text="Tuesday Month Indices"/>
+				<Text text="{odata>TuesdayMonthInd}"/>
+				<Label design="Bold" text="Wednesday Month Indices"/>
+				<Text text="{odata>WednesdayMonthInd}"/>
+				<Label design="Bold" text="Thursday Month Indices"/>
+				<Text text="{odata>ThursdayMonthInd}"/>
+				<Label design="Bold" text="Friday Month Indices"/>
+				<Text text="{odata>FridayMonthInd}"/>
+				<core:Title text="Week Days"/>
+				<Label design="Bold" text="Before Last Monday"/>
+				<Text text="{odata>BeforeLastMonday}"/>
+				<Label design="Bold" text="Last Monday"/>
+				<Text text="{odata>LastMonday}"/>
+				<Label design="Bold" text="Before Last Tuesday"/>
+				<Text text="{odata>BeforeLastTuesday}"/>
+				<Label design="Bold" text="Last Tuesday"/>
+				<Text text="{odata>LastTuesday}"/>
+				<Label design="Bold" text="Before Last Wednesday"/>
+				<Text text="{odata>BeforeLastWednesday}"/>
+				<Label design="Bold" text="Last Wednesday"/>
+				<Text text="{odata>LastWednesday}"/>
+				<Label design="Bold" text="Before Last Thursday"/>
+				<Text text="{odata>BeforeLastThursday}"/>
+				<Label design="Bold" text="Last Thursday"/>
+				<Text text="{odata>LastThursday}"/>
+				<Label design="Bold" text="Before Last Friday"/>
+				<Text text="{odata>BeforeLastFriday}"/>
+				<Label design="Bold" text="Last Friday"/>
+				<Text text="{odata>LastFriday}"/>
+				<core:Title text="Weekly"/>
+				<Label design="Bold" text="Last 5 Week Days Indices"/>
+				<Text text="{odata>Last5WDaysInd}"/>
+				<Label design="Bold" text="Last 5 Week Days"/>
+				<Text text="{odata>Last5WDays}"/>
+				<Label design="Bold" text="Last 4 Week Days Indices"/>
+				<Text text="{odata>WorkingDaysIndices}"/>
+				<Label design="Bold" text="Last 4 Week Days"/>
+				<Text text="{odata>Last4WDays}"/>
+				<Label design="Bold" text="Last Week Month"/>
+				<Text text="{odata>LastWMonth}"/>
+				<Label design="Bold" text="Before Last Week Month"/>
+				<Text text="{odata>BeforeLastWMonth}"/>
+			</ui:content>
+		</ui:layout.form.SimpleForm>
+	</Popover>
+</core:FragmentDefinition>

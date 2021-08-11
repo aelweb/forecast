@@ -1,0 +1,144 @@
+{
+	"algorithms": {
+		"label": "Algorithms",
+		"description": "Select an algorithm",
+		"items": [{
+			"key": "forecast",
+			"library": "apl",
+			"label": "APL Forecast Algorithm"
+		}, {
+			"key": "auto_arima",
+			"library": "pal",
+			"label": "PAL Auto ARIMA"
+		}, {
+			"key": "auto_smoothing",
+			"library": "pal",
+			"label": "PAL Auto Exponential Smoothing"
+		}, {
+			"key": "seasonality_test",
+			"library": "pal",
+			"label": "PAL Seasonality Test"
+		}]
+	},
+	"datasets": {
+		"label": "Datasets",
+		"description": "Select a dataset",
+		"list": [{
+			"key": "CashFlows",
+			"label": "Cash Flows with date & cash flow value only",
+			"libraries": [{
+				"key": "apl"
+			}, {
+				"key": "pal"
+			}]
+		}, {
+			"key": "CashFlows_extrapredictors",
+			"label": "Cash Flows with date, cash flow value and extra predictors",
+			"hasExtraPredictors": true,
+			"libraries": [{
+				"key": "apl"
+			}]
+		}, {
+			"key": "Ozone",
+			"label": "Ozone level for LA",
+			"libraries": [{
+				"key": "apl"
+			}, {
+				"key": "pal"
+			}]
+		}, {
+			"key": "Lag1AndCycles",
+			"label": "Lag 1 And Cycles",
+			"libraries": [{
+				"key": "apl"
+			}, {
+				"key": "pal"
+			}]
+		}, {
+			"key": "Lag1AndCyclesAndWn",
+			"label": "Lag 1 And Cycles And White Noise",
+			"libraries": [{
+				"key": "apl"
+			}, {
+				"key": "pal"
+			}]
+		}, {
+			"key": "TrendAndCyclic",
+			"label": "Trend And Cyclic",
+			"libraries": [{
+				"key": "apl"
+			}, {
+				"key": "pal"
+			}]
+		}, {
+			"key": "TrendAndCyclicAndWn",
+			"label": "Trend And Cyclic And White Noise",
+			"libraries": [{
+				"key": "apl"
+			}, {
+				"key": "pal"
+			}]
+		}, {
+			"key": "TrendAndCyclicAnd_4Wn",
+			"label": "Trend And Cyclic And 4 * White Noise",
+			"libraries": [{
+				"key": "apl"
+			}, {
+				"key": "pal"
+			}]
+		}]
+	},
+	"vizProperties": {
+		"title": {
+			"visible": false
+		},
+		"legend": {
+			"visible": false
+		},
+		"plotArea": {
+			"width": 1,
+			"adjustScale": true,
+			"isSmoothed": true
+		},
+		"timeAxis": {
+			"levels": "year",
+			"visible": false,
+			"title": {
+				"visible": false
+			}
+		},
+		"valueAxis": {
+			"title": {
+				"visible": false
+			}
+		},
+		"categoryAxis": {
+			"visible": false,
+			"adjustScale": true,
+			"isSmoothed": true,
+			"primaryScale": {
+				"fixedRange": true,
+				"minValue": 0,
+				"maxValue": 100
+			},
+			"title": {
+				"visible": false
+			},
+			"layout": {
+				"maxWidth": 0.01,
+				"width": 100
+
+			},
+			"scale": {
+				"fixedRange": true,
+				"minValue": 0,
+				"maxValue": 100
+			}
+		},
+		"interaction": {
+			"selectability": {
+				"mode": "single"
+			}
+		}
+	}
+}
