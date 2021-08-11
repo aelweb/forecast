@@ -1,0 +1,54 @@
+{
+	"key": "auto_smoothing",
+	"library": "pal",
+	"label": "PAL Auto Smoothing",
+	"service": {
+		"url": "/xsjs/pal/auto_smoothing.xsjs",
+		"method": "POST",
+		"params": {
+			"ACCURACYMEASURE": {
+				"label": "Search strategy",
+				"description": "The search strategy for optimal ARMA model",
+				"default": 1,
+				"values": [{
+					"key": "MSE",
+					"label": "Mean Square Error"
+				}, {
+					"key": "MAPE",
+					"label": "Mean Absolute Percentage Error"
+				}]
+			},
+			"TRAININGRATIO": {
+				"label": "Training Ratio",
+				"default": "0.75",
+				"step": 0.1,
+				"min": 0,
+				"max": 1,
+				"description": "The ratio of training data to the whole time series. Assuming the size of time series is N, and the training ratio is r, the first N*r time series is used to train, whereas only the latter N*(1-r) one is used to test"
+			},
+			"SEASONALITYCRITERION": {
+				"label": "Seasonal criterion",
+				"default": "0.5",
+				"step": 0.1,
+				"min": 0,
+				"max": 1,
+				"description": "The criterion of the auto-correlation coefficient for accepting seasonality, in the range of (0, 1). The larger it is, the less probable a time series is regarded to be seasonal."
+			},
+			"FORECASTNUM": {
+				"label": "Number of forecast",
+				"default": "20",
+				"step": 1,
+				"min": 1,
+				"max": 100,
+				"description": "Number of points to forecast"
+			}
+		}
+	},
+	"default_payload": {
+		"DATASETNAME": null,
+		"ACCURACYMEASURE": "MAPE",
+		"TRAININGRATIO": 0.75,
+		"SEASONALITYCRITERION": 0.5,
+		"FORECASTNUM": 20
+	}
+}

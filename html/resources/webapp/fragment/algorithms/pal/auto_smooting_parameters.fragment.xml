@@ -1,0 +1,45 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:ui="sap.ui">
+	<ui:layout.form.Form editable="true">
+		<ui:layout>
+			<ui:layout.form.ResponsiveGridLayout columnsL="1" columnsM="1"/>
+		</ui:layout>
+		<ui:formContainers>
+			<ui:layout.form.FormContainer>
+				<ui:formElements>
+					<ui:layout.form.FormElement label="{pal_auto_smoothing>/service/params/ACCURACYMEASURE/label}">
+						<ui:fields>
+							<Select selectedKey="{payload>/ACCURACYMEASURE}" items="{pal_auto_smoothing>/service/params/ACCURACYMEASURE/values}"
+								tooltip="{pal_auto_smoothing>/service/params/ACCURACYMEASURE/description}">
+								<items>
+									<ui:core.ListItem text="{pal_auto_smoothing>label}" key="{pal_auto_smoothing>key}"/>
+								</items>
+							</Select>
+						</ui:fields>
+					</ui:layout.form.FormElement>
+					<ui:layout.form.FormElement label="{pal_auto_smoothing>/service/params/TRAININGRATIO/label}">
+						<ui:fields>
+							<Slider progress="true" value="{payload>/TRAININGRATIO}" step="{pal_auto_smoothing>/service/params/TRAININGRATIO/step}"
+								min="{pal_auto_smoothing>/service/params/TRAININGRATIO/min}" max="{pal_auto_smoothing>/service/params/TRAININGRATIO/max}"
+								enableTickmarks="true" inputsAsTooltips="true" tooltip="{pal_auto_smoothing>/service/params/TRAININGRATIO/description}"/>
+							<Input type="Number" value="{payload>/TRAININGRATIO}" enabled="false"/>
+						</ui:fields>
+					</ui:layout.form.FormElement>
+					<ui:layout.form.FormElement label="{pal_auto_smoothing>/service/params/SEASONALITYCRITERION/label}">
+						<ui:fields>
+							<Slider progress="true" value="{payload>/SEASONALITYCRITERION}" step="{pal_auto_smoothing>/service/params/SEASONALITYCRITERION/step}"
+								min="{pal_auto_smoothing>/service/params/SEASONALITYCRITERION/min}" max="{pal_auto_smoothing>/service/params/SEASONALITYCRITERION/max}"
+								enableTickmarks="true" inputsAsTooltips="true" tooltip="{SEASONALITYCRITERION>/service/params/SEASONALITYCRITERION/description}"/>
+							<Input type="Number" value="{payload>/SEASONALITYCRITERION}" enabled="false"/></ui:fields>
+					</ui:layout.form.FormElement>
+					<ui:layout.form.FormElement label="{pal_auto_smoothing>/service/params/FORECASTNUM/label}">
+						<ui:fields>
+							<Slider progress="true" value="{payload>/FORECASTNUM}" step="{pal_auto_smoothing>/service/params/FORECASTNUM/step}"
+								min="{pal_auto_smoothing>/service/params/FORECASTNUM/min}" max="{pal_auto_smoothing>/service/params/FORECASTNUM/max}"
+								enableTickmarks="true" inputsAsTooltips="true" tooltip="{FORECASTNUM>/service/params/FORECASTNUM/description}"/>
+							<Input type="Number" value="{payload>/FORECASTNUM}" enabled="false"/></ui:fields>
+					</ui:layout.form.FormElement>
+				</ui:formElements>
+			</ui:layout.form.FormContainer>
+		</ui:formContainers>
+	</ui:layout.form.Form>
+</core:FragmentDefinition>
