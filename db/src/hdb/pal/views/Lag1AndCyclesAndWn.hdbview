@@ -1,0 +1,9 @@
+VIEW "aa.forecast.db.hdb.pal.views::Lag1AndCyclesAndWn" as
+    select
+        to_int(rank() over (order by "signal_time" asc)) as "signal_time",
+        "signal_value"
+    from
+        "aa.forecast.db.data::Lag1AndCyclesAndWn"
+    where
+        "signal_value" is not null
+    order by 1 asc

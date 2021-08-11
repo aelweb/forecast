@@ -1,0 +1,78 @@
+namespace aa.forecast.db.hdb.pal;
+
+context common {
+    table type tt_parameter {
+        "param_name"   : String(1000);
+        "int_value"    : Integer;
+        "double_value" : Double;
+        "string_value" : String(255);
+    };
+    table type tt_dataset {
+        "signal_time"  : Integer;
+        "signal_value" : Double;
+    };
+    table type tt_statistics {
+        "stat_name"  : String(100);
+        "stat_value" : String(100);
+    };
+};
+
+context seasonality_test {
+    table type tt_output {
+        "signal_time" : Integer;
+        "seasonal"    : Double;
+        "trend"       : Double;
+        "random"      : Double;
+    };
+};
+
+context smoothing {
+    table type tt_output_raw {
+        "signal_time"  : Integer;
+        "forecast"     : Double;
+        "lowerlimit_1" : Double;
+        "upperlimit_1" : Double;
+        "lowerlimit_2" : Double;
+        "upperlimit_2" : Double;
+    };
+    table type tt_output {
+        "signal_time"  : Integer;
+        "signal_value" : Double;
+        "forecast"     : Double;
+        "lowerlimit_1" : Double;
+        "upperlimit_1" : Double;
+        "lowerlimit_2" : Double;
+        "upperlimit_2" : Double;
+    };
+};
+
+context arima {
+    table type tt_model {
+        "key"   : String(100);
+        "value" : String(5000);
+    };
+    table type tt_fit {
+        "signal_time" : Integer;
+        "fitted"      : Double;
+        "residuals"   : Double;
+    };
+    table type tt_output_raw {
+        "signal_time"    : Integer;
+        "forecast"       : Double;
+        "standard_error" : Double;
+        "lowerlimit_80"  : Double;
+        "upperlimit_80"  : Double;
+        "lowerlimit_95"  : Double;
+        "upperlimit_95"  : Double;
+    };
+    table type tt_output {
+        "signal_time"    : Integer;
+        "signal_value"   : Double;
+        "forecast"       : Double;
+        "standard_error" : Double;
+        "lowerlimit_80"  : Double;
+        "upperlimit_80"  : Double;
+        "lowerlimit_95"  : Double;
+        "upperlimit_95"  : Double;
+    };
+};

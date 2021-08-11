@@ -1,0 +1,32 @@
+VIEW "aa.forecast.db.hdb.pal.views::CashFlows_extrapredictors" as
+    select
+        to_int(rank() over (order by "signal_time" asc)) as "signal_time",
+        "signal_value",
+        "WorkingDaysIndices",
+        "ReverseWorkingDaysIndices",
+        "MondayMonthInd",
+        "TuesdayMonthInd",
+        "WednesdayMonthInd",
+        "ThursdayMonthInd",
+        "FridayMonthInd",
+        "BeforeLastMonday",
+        "LastMonday",
+        "BeforeLastTuesday",
+        "LastTuesday",
+        "BeforeLastWednesday",
+        "LastWednesday",
+        "BeforeLastThursday",
+        "LastThursday",
+        "BeforeLastFriday",
+        "LastFriday",
+        "Last5WDaysInd",
+        "Last5WDays",
+        "Last4WDaysInd",
+        "Last4WDays",
+        "LastWMonth",
+        "BeforeLastWMonth"
+    from
+        "aa.forecast.db.data::CashFlows_extrapredictors"
+    where
+        "signal_value" is not null
+    order by 1 asc

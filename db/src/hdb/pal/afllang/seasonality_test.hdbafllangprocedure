@@ -1,0 +1,10 @@
+{
+    "area" : "AFLPAL",
+    "function" : "SEASONALITYTEST_ANY",
+    "parameters" : [
+        {  "direction" : "IN",  "type" : "aa.forecast.db.hdb.pal::common.tt_dataset"},
+        {  "direction" : "IN",  "type" : "aa.forecast.db.hdb.pal::common.tt_parameter"},
+        {  "direction" : "OUT", "type" : "aa.forecast.db.hdb.pal::common.tt_statistics"},
+        {  "direction" : "OUT", "type" : "aa.forecast.db.hdb.pal::seasonality_test.tt_output"}
+    ]
+}
