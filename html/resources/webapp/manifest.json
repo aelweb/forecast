@@ -95,10 +95,10 @@
 				"preload": true,
 				"uri": "model/algorithms/pal/auto_arima.json"
 			},
-			"pal_auto_smooting": {
+			"pal_auto_smoothing": {
 				"type": "sap.ui.model.json.JSONModel",
 				"preload": true,
-				"uri": "model/algorithms/pal/auto_smooting.json"
+				"uri": "model/algorithms/pal/auto_smoothing.json"
 			},
 			"pal_seasonality_test": {
 				"type": "sap.ui.model.json.JSONModel",
@@ -143,9 +143,9 @@
 				"pattern": "auto_arima",
 				"target": "auto_arima"
 			}, {
-				"name": "auto_smooting",
-				"pattern": "auto_smooting",
-				"target": "auto_smooting"
+				"name": "auto_smoothing",
+				"pattern": "auto_smoothing",
+				"target": "auto_smoothing"
 			}, {
 				"name": "seasonality_test",
 				"pattern": "seasonality_test",
@@ -165,9 +165,9 @@
 					"clearAggregation": true,
 					"viewName": "algorithms.pal.auto_arima"
 				},
-				"auto_smooting": {
+				"auto_smoothing": {
 					"clearAggregation": true,
-					"viewName": "algorithms.pal.auto_smooting"
+					"viewName": "algorithms.pal.auto_smoothing"
 				},
 				"seasonality_test": {
 					"clearAggregation": true,
